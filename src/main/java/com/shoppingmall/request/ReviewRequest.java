@@ -1,5 +1,6 @@
 package com.shoppingmall.request;
 
+import com.shoppingmall.domain.Review;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@NoArgsConstructor // @Build 쓸 때 없어서 테스트 코드에서 오류 발생
+@NoArgsConstructor // @Build 를 사용할 때 이게 없어서 테스트 코드에서 오류 발생
 public class ReviewRequest {
 
     @NotBlank(message = "제목을 입력해주세요.")
@@ -26,5 +27,11 @@ public class ReviewRequest {
         this.title = title;
         this.content = content;
         this.rating = rating;
+    }
+
+    public ReviewRequest(Review review) {
+        this.title = review.getTitle();
+        this.content = review.getContent();
+        this.rating = review.getRating();
     }
 }

@@ -1,5 +1,6 @@
 package com.shoppingmall.response;
 
+import com.shoppingmall.domain.Review;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,11 @@ public class ReviewResponse {
         this.title = title;
         this.content = content;
         this.rating = rating;
+    }
+
+    public ReviewResponse(Review review) {
+        this.title = review.getTitle();
+        this.content = review.getContent();
+        this.rating = review.getRating();
     }
 }
