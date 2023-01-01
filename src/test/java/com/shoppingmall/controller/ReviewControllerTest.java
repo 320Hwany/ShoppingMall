@@ -40,7 +40,7 @@ class ReviewControllerTest {
     private ReviewRepository reviewRepository;
 
     @Nested
-    @DisplayName("리뷰 저장 테스트")
+    @DisplayName("리뷰 저장 테스트 - Controller")
     class SaveReview {
         @BeforeEach
         void clean() {
@@ -148,7 +148,7 @@ class ReviewControllerTest {
     }
 
     @Nested
-    @DisplayName("리뷰 조회 테스트")
+    @DisplayName("리뷰 조회 테스트 - Controller")
     class ReadReview {
         @BeforeEach
         void clean() {
@@ -166,7 +166,6 @@ class ReviewControllerTest {
                     .build();
 
             reviewRepository.save(review);
-            ReviewRequest reviewRequest = new ReviewRequest(review);
 
             // expected
             mockMvc.perform(get("/review/{reviewId}", review.getId())
