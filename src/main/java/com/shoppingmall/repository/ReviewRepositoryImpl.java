@@ -3,7 +3,7 @@ package com.shoppingmall.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import com.shoppingmall.domain.Review;
-import com.shoppingmall.request.ReviewSearch;
+import com.shoppingmall.request.review.ReviewSearch;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

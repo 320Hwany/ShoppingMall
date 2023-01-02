@@ -3,8 +3,8 @@ package com.shoppingmall.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingmall.domain.Review;
 import com.shoppingmall.repository.ReviewRepository;
-import com.shoppingmall.request.ReviewSave;
-import com.shoppingmall.request.ReviewUpdate;
+import com.shoppingmall.request.review.ReviewSave;
+import com.shoppingmall.request.review.ReviewUpdate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -304,6 +304,36 @@ class ReviewControllerTest {
                     .andExpect(jsonPath("$.validation.title").value("제목을 입력해주세요."))
                     .andExpect(jsonPath("$.validation.rating").value("0이상의 수를 입력해주세요."))
                     .andDo(print());
+        }
+    }
+
+    @Nested
+    @DisplayName("리뷰 삭제 테스트 - Controller")
+    class DeleteReview {
+        @BeforeEach
+        void clean() {
+            reviewRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("리뷰 삭제")
+        void deleteReview() throws Exception {
+            // given
+            Review review = Review.builder()
+                    .title("제목입니다.")
+                    .content("내용입니다.")
+                    .rating(3)
+                    .build();
+
+            reviewRepository.save(review);
+
+            // expected
+            mockMvc.perform(delete("/review/{reviewId}", review.getId())
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(print());
+
+            assertThat(reviewRepository.count()).isEqualTo(0);
         }
     }
 }

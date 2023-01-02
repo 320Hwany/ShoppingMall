@@ -1,8 +1,8 @@
 package com.shoppingmall.controller;
 
-import com.shoppingmall.request.ReviewSave;
-import com.shoppingmall.request.ReviewSearch;
-import com.shoppingmall.request.ReviewUpdate;
+import com.shoppingmall.request.review.ReviewSave;
+import com.shoppingmall.request.review.ReviewSearch;
+import com.shoppingmall.request.review.ReviewUpdate;
 import com.shoppingmall.response.ReviewResponse;
 import com.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +41,10 @@ public class ReviewController {
                                                        @RequestBody @Valid ReviewUpdate reviewUpdate) {
         ReviewResponse reviewResponse = reviewService.updateReview(reviewId, reviewUpdate);
         return ResponseEntity.ok(reviewResponse);
+    }
+
+    @DeleteMapping("/review/{reviewId}")
+    public void deleteReview(@PathVariable Long reviewId) {
+        reviewService.deleteReview(reviewId);
     }
 }

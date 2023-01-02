@@ -3,9 +3,9 @@ package com.shoppingmall.service;
 import com.shoppingmall.domain.Review;
 import com.shoppingmall.exception.e404.ReviewNotFoundException;
 import com.shoppingmall.repository.ReviewRepository;
-import com.shoppingmall.request.ReviewSave;
-import com.shoppingmall.request.ReviewSearch;
-import com.shoppingmall.request.ReviewUpdate;
+import com.shoppingmall.request.review.ReviewSave;
+import com.shoppingmall.request.review.ReviewSearch;
+import com.shoppingmall.request.review.ReviewUpdate;
 import com.shoppingmall.response.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,5 +61,12 @@ public class ReviewService {
                 .orElseThrow(ReviewNotFoundException::new);
         review.update(reviewUpdate);
         return new ReviewResponse(review);
+    }
+
+    @Transactional
+    public void deleteReview(Long id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(ReviewNotFoundException::new);
+        reviewRepository.delete(review);
     }
 }

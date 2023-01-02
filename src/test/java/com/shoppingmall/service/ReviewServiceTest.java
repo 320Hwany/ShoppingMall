@@ -3,9 +3,9 @@ package com.shoppingmall.service;
 import com.shoppingmall.domain.Review;
 import com.shoppingmall.exception.e404.ReviewNotFoundException;
 import com.shoppingmall.repository.ReviewRepository;
-import com.shoppingmall.request.ReviewSave;
-import com.shoppingmall.request.ReviewSearch;
-import com.shoppingmall.request.ReviewUpdate;
+import com.shoppingmall.request.review.ReviewSave;
+import com.shoppingmall.request.review.ReviewSearch;
+import com.shoppingmall.request.review.ReviewUpdate;
 import com.shoppingmall.response.ReviewResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,6 +171,42 @@ class ReviewServiceTest {
             // expected
             assertThrows(ReviewNotFoundException.class,
                     () -> reviewService.updateReview(1L, reviewUpdate));
+        }
+    }
+
+    @Nested
+    @DisplayName("리뷰 삭제 테스트 - Service")
+    class DeleteReview {
+        @BeforeEach
+        void clean() {
+            reviewRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("삭제 요청한 리뷰가 존재하면 리뷰가 삭제됩니다.")
+        void deleteReviewSuccess() {
+            // given
+            Review review = Review.builder()
+                    .title("제목입니다.")
+                    .content("내용입니다.")
+                    .rating(3)
+                    .build();
+
+            reviewRepository.save(review);
+
+            // when
+            reviewService.deleteReview(review.getId());
+
+            // then
+            assertThat(reviewRepository.count()).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("삭제 요청한 리뷰가 존재하지 않으면 오류 메세지를 보여줍니다.")
+        void deleteReviewFail() {
+            // expected
+            assertThrows(ReviewNotFoundException.class,
+                    () -> reviewService.deleteReview(1L));
         }
     }
 }

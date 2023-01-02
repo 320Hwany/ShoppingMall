@@ -1,11 +1,9 @@
 package com.shoppingmall.domain;
 
-import com.shoppingmall.request.ReviewUpdate;
+import com.shoppingmall.request.review.ReviewUpdate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 

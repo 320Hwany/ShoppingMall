@@ -1,4 +1,4 @@
-package com.shoppingmall.request;
+package com.shoppingmall.request.review;
 
 import lombok.Builder;
 import lombok.Getter;
