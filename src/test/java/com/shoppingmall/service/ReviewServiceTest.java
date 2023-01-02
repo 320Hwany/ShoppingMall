@@ -1,14 +1,16 @@
 package com.shoppingmall.service;
 
 import com.shoppingmall.domain.Review;
-import com.shoppingmall.exception.e404.PostNotFoundException;
+import com.shoppingmall.exception.e404.ReviewNotFoundException;
 import com.shoppingmall.repository.ReviewRepository;
-import com.shoppingmall.request.ReviewRequest;
+import com.shoppingmall.request.ReviewSave;
 import com.shoppingmall.request.ReviewSearch;
+import com.shoppingmall.request.ReviewUpdate;
 import com.shoppingmall.response.ReviewResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+@Transactional
 class ReviewServiceTest {
 
     @Autowired
@@ -37,14 +40,14 @@ class ReviewServiceTest {
         @DisplayName("리뷰 저장")
         void save() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
+            ReviewSave reviewSave = ReviewSave.builder()
                     .title("제목입니다.")
                     .content("내용입니다.")
                     .rating(3)
                     .build();
 
             // when
-            ReviewResponse reviewResponse = reviewService.reviewSave(reviewRequest);
+            ReviewResponse reviewResponse = reviewService.reviewSave(reviewSave);
 
             // then
             assertThat(reviewRepository.count()).isEqualTo(1);
@@ -87,7 +90,7 @@ class ReviewServiceTest {
         @DisplayName("리뷰 조회 실패 - 단건 조회")
         void readReviewFail() {
             // expected
-            assertThrows(PostNotFoundException.class,
+            assertThrows(ReviewNotFoundException.class,
                     () -> reviewService.getReviewResponse(1L));
         }
 
@@ -116,6 +119,58 @@ class ReviewServiceTest {
             assertThat(reviewsResponse.size()).isEqualTo(10);
             assertThat(reviewsResponse.get(0).getTitle()).isEqualTo("제목입니다. " + 20);
             assertThat(reviewsResponse.get(0).getContent()).isEqualTo("내용입니다. " + 20);
+        }
+    }
+
+    @Nested
+    @DisplayName("리뷰 수정 테스트 - Service")
+    class UpdateReview {
+        @BeforeEach
+        void clean() {
+            reviewRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("수정할 리뷰가 존재하고 조건에 만족하면 리뷰가 수정됩니다.")
+        void updateReviewSuccess() {
+            // given
+            Review review = Review.builder()
+                    .title("제목입니다.")
+                    .content("내용입니다.")
+                    .rating(3)
+                    .build();
+
+            reviewRepository.save(review);
+
+            ReviewUpdate reviewUpdate = ReviewUpdate.builder()
+                    .title("제목 수정입니다.")
+                    .content("내용 수정입니다.")
+                    .rating(5)
+                    .build();
+
+            // when
+            reviewService.updateReview(review.getId(), reviewUpdate);
+
+            // then
+            assertThat(reviewRepository.count()).isEqualTo(1);
+            assertThat(review.getTitle()).isEqualTo("제목 수정입니다.");
+            assertThat(review.getContent()).isEqualTo("내용 수정입니다.");
+            assertThat(review.getRating()).isEqualTo(5);
+        }
+
+        @Test
+        @DisplayName("수정할 리뷰가 존재하지 않으면 예외를 발생시킵니다.")
+        void NotFoundReview() {
+            // given
+            ReviewUpdate reviewUpdate = ReviewUpdate.builder()
+                    .title("제목 수정입니다.")
+                    .content("내용 수정입니다.")
+                    .rating(5)
+                    .build();
+
+            // expected
+            assertThrows(ReviewNotFoundException.class,
+                    () -> reviewService.updateReview(1L, reviewUpdate));
         }
     }
 }

@@ -1,28 +1,32 @@
 package com.shoppingmall.service;
 
 import com.shoppingmall.domain.Review;
-import com.shoppingmall.exception.e404.PostNotFoundException;
+import com.shoppingmall.exception.e404.ReviewNotFoundException;
 import com.shoppingmall.repository.ReviewRepository;
-import com.shoppingmall.request.ReviewRequest;
+import com.shoppingmall.request.ReviewSave;
 import com.shoppingmall.request.ReviewSearch;
+import com.shoppingmall.request.ReviewUpdate;
 import com.shoppingmall.response.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    public ReviewResponse reviewSave(ReviewRequest reviewRequest) {
+    @Transactional
+    public ReviewResponse reviewSave(ReviewSave reviewSave) {
         Review review = Review.builder()
-                .title(reviewRequest.getTitle())
-                .content(reviewRequest.getContent())
-                .rating(reviewRequest.getRating())
+                .title(reviewSave.getTitle())
+                .content(reviewSave.getContent())
+                .rating(reviewSave.getRating())
                 .build();
 
         reviewRepository.save(review);
@@ -36,7 +40,7 @@ public class ReviewService {
 
     public ReviewResponse getReviewResponse(Long id) {
         Review review = reviewRepository.findById(id)
-                .orElseThrow(PostNotFoundException::new);
+                .orElseThrow(ReviewNotFoundException::new);
 
         return ReviewResponse.builder()
                 .title(review.getTitle())
@@ -49,5 +53,13 @@ public class ReviewService {
         return reviewRepository.getReviews(reviewSearch).stream()
                 .map(ReviewResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ReviewResponse updateReview(Long id, ReviewUpdate reviewUpdate) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(ReviewNotFoundException::new);
+        review.update(reviewUpdate);
+        return new ReviewResponse(review);
     }
 }

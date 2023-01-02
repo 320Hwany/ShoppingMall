@@ -1,7 +1,8 @@
 package com.shoppingmall.controller;
 
-import com.shoppingmall.request.ReviewRequest;
+import com.shoppingmall.request.ReviewSave;
 import com.shoppingmall.request.ReviewSearch;
+import com.shoppingmall.request.ReviewUpdate;
 import com.shoppingmall.response.ReviewResponse;
 import com.shoppingmall.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/review-save")
-    public ResponseEntity<ReviewResponse> reviewSave(@RequestBody @Valid ReviewRequest reviewRequest) {
-        ReviewResponse reviewResponse = reviewService.reviewSave(reviewRequest);
+    public ResponseEntity<ReviewResponse> reviewSave(@RequestBody @Valid ReviewSave reviewSave) {
+        ReviewResponse reviewResponse = reviewService.reviewSave(reviewSave);
         return ResponseEntity.ok(reviewResponse);
     }
 
@@ -33,5 +34,12 @@ public class ReviewController {
     public ResponseEntity<List<ReviewResponse>> getReviews(@ModelAttribute ReviewSearch reviewSearch) {
         List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponse(reviewSearch);
         return ResponseEntity.ok(reviewsResponse);
+    }
+
+    @PatchMapping("/review/{reviewId}")
+    public ResponseEntity<ReviewResponse> updateReview(@PathVariable Long reviewId,
+                                                       @RequestBody @Valid ReviewUpdate reviewUpdate) {
+        ReviewResponse reviewResponse = reviewService.updateReview(reviewId, reviewUpdate);
+        return ResponseEntity.ok(reviewResponse);
     }
 }

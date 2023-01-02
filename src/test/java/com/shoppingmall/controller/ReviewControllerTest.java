@@ -3,7 +3,8 @@ package com.shoppingmall.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingmall.domain.Review;
 import com.shoppingmall.repository.ReviewRepository;
-import com.shoppingmall.request.ReviewRequest;
+import com.shoppingmall.request.ReviewSave;
+import com.shoppingmall.request.ReviewUpdate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,14 +22,14 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@Transactional
 class ReviewControllerTest {
 
     @Autowired
@@ -50,7 +52,7 @@ class ReviewControllerTest {
         @DisplayName("조건에 만족하면 리뷰가 저장됩니다.")
         void saveSuccess() throws Exception {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
+            ReviewSave reviewRequest = ReviewSave.builder()
                     .title("리뷰 제목")
                     .content("리뷰 내용")
                     .rating(3)
@@ -75,7 +77,7 @@ class ReviewControllerTest {
         @DisplayName("조건에 만족하지 않으면 오류 메세지를 보여줍니다 - 제목 오류")
         void saveFailCauseTitle() throws Exception {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
+            ReviewSave reviewRequest = ReviewSave.builder()
                     .title("")
                     .content("리뷰 내용")
                     .rating(3)
@@ -100,7 +102,7 @@ class ReviewControllerTest {
         @DisplayName("조건에 만족하지 않으면 오류 메세지를 보여줍니다 - 내용 오류")
         void saveFailCauseContent() throws Exception {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
+            ReviewSave reviewRequest = ReviewSave.builder()
                     .title("리뷰 제목")
                     .content("")
                     .rating(3)
@@ -125,7 +127,7 @@ class ReviewControllerTest {
         @DisplayName("조건에 만족하지 않으면 오류 메세지를 보여줍니다 - 별점 오류")
         void saveFailCauseRating() throws Exception {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
+            ReviewSave reviewRequest = ReviewSave.builder()
                     .title("리뷰 제목")
                     .content("리뷰 내용")
                     .rating(6)
@@ -209,6 +211,98 @@ class ReviewControllerTest {
                     .andExpect(jsonPath("$.length()", is(10)))
                     .andExpect(jsonPath("$[0].title").value("제목입니다 20"))
                     .andExpect(jsonPath("$[0].content").value("내용입니다 20"))
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    @DisplayName("리뷰 수정 테스트 - Controller")
+    class UpdateReview {
+        @BeforeEach
+        void clean() {
+            reviewRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("수정할 리뷰가 존재하고 조건에 만족하면 리뷰가 수정됩니다.")
+        void updateReviewSuccess() throws Exception {
+            // given
+            Review review = Review.builder()
+                    .title("제목입니다.")
+                    .content("내용입니다.")
+                    .rating(3)
+                    .build();
+
+            reviewRepository.save(review);
+
+            ReviewUpdate reviewUpdate = ReviewUpdate.builder()
+                    .title("제목 수정입니다.")
+                    .content("내용 수정입니다.")
+                    .rating(5)
+                    .build();
+
+            String json = objectMapper.writeValueAsString(reviewUpdate);
+
+            // expected
+            mockMvc.perform(patch("/review/{reviewId}", review.getId())
+                            .contentType(APPLICATION_JSON)
+                            .content(json))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.title").value("제목 수정입니다."))
+                    .andExpect(jsonPath("$.content").value("내용 수정입니다."))
+                    .andExpect(jsonPath("$.rating").value(5))
+                    .andDo(print());
+        }
+
+        @Test
+        @DisplayName("수정할 리뷰가 존재하지 않으면 오류메세지를 보여줍니다.")
+        void NotFoundReview() throws Exception {
+            // given
+            ReviewUpdate reviewUpdate = ReviewUpdate.builder()
+                    .title("제목 수정입니다.")
+                    .content("내용 수정입니다.")
+                    .rating(5)
+                    .build();
+
+            String json = objectMapper.writeValueAsString(reviewUpdate);
+
+            // expected
+            mockMvc.perform(patch("/review/{reviewId}", 1L)
+                            .contentType(APPLICATION_JSON)
+                            .content(json))
+                    .andExpect(status().isNotFound())
+                    .andDo(print());
+        }
+
+        @Test
+        @DisplayName("수정할 리뷰가 조건에 맞지 않으면 오류메세지를 보여줍니다.")
+        void invalidReview() throws Exception {
+            // given
+            Review review = Review.builder()
+                    .title("제목입니다.")
+                    .content("내용입니다.")
+                    .rating(3)
+                    .build();
+
+            reviewRepository.save(review);
+
+            ReviewUpdate reviewUpdate = ReviewUpdate.builder()
+                    .title("")
+                    .content("내용 수정입니다.")
+                    .rating(-3)
+                    .build();
+
+            String json = objectMapper.writeValueAsString(reviewUpdate);
+
+            // expected
+            mockMvc.perform(patch("/review/{reviewId}", review.getId())
+                            .contentType(APPLICATION_JSON)
+                            .content(json))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.code").value("400"))
+                    .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
+                    .andExpect(jsonPath("$.validation.title").value("제목을 입력해주세요."))
+                    .andExpect(jsonPath("$.validation.rating").value("0이상의 수를 입력해주세요."))
                     .andDo(print());
         }
     }

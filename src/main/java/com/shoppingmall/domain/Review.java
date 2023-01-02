@@ -1,8 +1,11 @@
 package com.shoppingmall.domain;
 
+import com.shoppingmall.request.ReviewUpdate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
@@ -27,5 +30,11 @@ public class Review {
         this.title = title;
         this.content = content;
         this.rating = rating;
+    }
+
+    public void update(ReviewUpdate reviewUpdate) {
+        this.title = reviewUpdate.getTitle();
+        this.content = reviewUpdate.getContent();
+        this.rating = reviewUpdate.getRating();
     }
 }

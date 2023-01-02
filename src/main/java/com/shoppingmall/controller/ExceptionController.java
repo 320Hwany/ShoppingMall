@@ -1,7 +1,7 @@
 package com.shoppingmall.controller;
 
 import com.shoppingmall.exception.e404.NotFoundException;
-import com.shoppingmall.exception.e404.PostNotFoundException;
+import com.shoppingmall.exception.e404.ReviewNotFoundException;
 import com.shoppingmall.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -30,7 +30,7 @@ public class ExceptionController {
     }
 
     @ResponseBody
-    @ExceptionHandler(PostNotFoundException.class)
+    @ExceptionHandler(ReviewNotFoundException.class)
     public ResponseEntity<ErrorResponse> postNotFound(NotFoundException e) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .code(e.getStatusCode())

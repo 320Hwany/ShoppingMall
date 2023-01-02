@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor // @Build 를 사용할 때 이게 없어서 테스트 코드에서 오류 발생
-public class ReviewRequest {
+public class ReviewSave {
 
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
@@ -23,13 +23,13 @@ public class ReviewRequest {
     private int rating;
 
     @Builder
-    public ReviewRequest(String title, String content, int rating) {
+    public ReviewSave(String title, String content, int rating) {
         this.title = title;
         this.content = content;
         this.rating = rating;
     }
 
-    public ReviewRequest(Review review) {
+    public ReviewSave(Review review) {
         this.title = review.getTitle();
         this.content = review.getContent();
         this.rating = review.getRating();
