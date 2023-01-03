@@ -2,7 +2,7 @@ package com.shoppingmall.service;
 
 import com.shoppingmall.domain.Review;
 import com.shoppingmall.exception.e404.ReviewNotFoundException;
-import com.shoppingmall.repository.ReviewRepository;
+import com.shoppingmall.repository.review.ReviewRepository;
 import com.shoppingmall.request.review.ReviewSave;
 import com.shoppingmall.request.review.ReviewSearch;
 import com.shoppingmall.request.review.ReviewUpdate;

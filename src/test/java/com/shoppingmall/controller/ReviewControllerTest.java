@@ -2,7 +2,7 @@ package com.shoppingmall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingmall.domain.Review;
-import com.shoppingmall.repository.ReviewRepository;
+import com.shoppingmall.repository.review.ReviewRepository;
 import com.shoppingmall.request.review.ReviewSave;
 import com.shoppingmall.request.review.ReviewUpdate;
 import org.junit.jupiter.api.BeforeEach;

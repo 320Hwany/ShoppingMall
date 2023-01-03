@@ -1,4 +1,4 @@
-package com.shoppingmall.repository;
+package com.shoppingmall.repository.review;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 

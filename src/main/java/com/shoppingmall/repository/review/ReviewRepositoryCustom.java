@@ -1,4 +1,4 @@
-package com.shoppingmall.repository;
+package com.shoppingmall.repository.review;
 
 import com.shoppingmall.domain.Review;
 import com.shoppingmall.request.review.ReviewSearch;
