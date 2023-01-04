@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.*;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -23,36 +25,21 @@ public class ReviewService {
 
     @Transactional
     public ReviewResponse reviewSave(ReviewSave reviewSave) {
-        Review review = Review.builder()
-                .title(reviewSave.getTitle())
-                .content(reviewSave.getContent())
-                .rating(reviewSave.getRating())
-                .build();
-
+        Review review = reviewSave.toEntity();
         reviewRepository.save(review);
-
-        return ReviewResponse.builder()
-                .title(review.getTitle())
-                .content(review.getContent())
-                .rating(review.getRating())
-                .build();
+        return new ReviewResponse(review);
     }
 
     public ReviewResponse getReviewResponse(Long id) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(ReviewNotFoundException::new);
-
-        return ReviewResponse.builder()
-                .title(review.getTitle())
-                .content(review.getContent())
-                .rating(review.getRating())
-                .build();
+        return new ReviewResponse(review);
     }
 
     public List<ReviewResponse> getReviewsResponse(ReviewSearch reviewSearch) {
         return reviewRepository.getReviews(reviewSearch).stream()
                 .map(ReviewResponse::new)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     @Transactional

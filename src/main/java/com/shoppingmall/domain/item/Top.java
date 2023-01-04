@@ -1,7 +1,7 @@
 package com.shoppingmall.domain.item;
 
 import com.shoppingmall.domain.item.size.TopSize;
-import com.shoppingmall.request.item.ItemRequest;
+import com.shoppingmall.request.item.ItemBasicField;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +20,8 @@ public class Top extends Item {
     private TopSize topSize;
 
     @Builder
-    public Top(ItemRequest itemRequest, TopSize topSize) {
-        super(itemRequest);
+    public Top(ItemBasicField itemBasicField, TopSize topSize) {
+        super(itemBasicField);
         this.topSize = topSize;
     }
 }

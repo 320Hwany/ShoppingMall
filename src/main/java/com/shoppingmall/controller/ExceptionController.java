@@ -1,5 +1,6 @@
 package com.shoppingmall.controller;
 
+import com.shoppingmall.exception.e404.ItemNotFoundException;
 import com.shoppingmall.exception.e404.NotFoundException;
 import com.shoppingmall.exception.e404.ReviewNotFoundException;
 import com.shoppingmall.response.ErrorResponse;
@@ -32,6 +33,17 @@ public class ExceptionController {
     @ResponseBody
     @ExceptionHandler(ReviewNotFoundException.class)
     public ResponseEntity<ErrorResponse> postNotFound(NotFoundException e) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(e.getStatusCode())
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(NOT_FOUND).body(errorResponse);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<ErrorResponse> itemNotFound(ItemNotFoundException e) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .code(e.getStatusCode())
                 .message(e.getMessage())

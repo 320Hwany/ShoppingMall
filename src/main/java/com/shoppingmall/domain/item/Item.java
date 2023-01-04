@@ -1,6 +1,6 @@
 package com.shoppingmall.domain.item;
 
-import com.shoppingmall.request.item.ItemRequest;
+import com.shoppingmall.request.item.ItemBasicField;
 import com.shoppingmall.response.ItemResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +23,14 @@ public abstract class Item {
 
     private String itemName;
 
-    private int itemPrice;
+    private Integer itemPrice;
 
     private String itemColor;
 
-    public Item(ItemRequest itemRequest) {
-        this.itemName = itemRequest.getItemName();
-        this.itemPrice = itemRequest.getItemPrice();
-        this.itemColor = itemRequest.getItemColor();
+    public Item(ItemBasicField itemBasicField) {
+        this.itemName = itemBasicField.getItemName();
+        this.itemPrice = itemBasicField.getItemPrice();
+        this.itemColor = itemBasicField.getItemColor();
     }
 
     public static ItemResponse getItemResponse(Item item) {

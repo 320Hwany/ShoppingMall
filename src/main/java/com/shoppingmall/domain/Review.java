@@ -1,6 +1,7 @@
 package com.shoppingmall.domain;
 
 import com.shoppingmall.request.review.ReviewUpdate;
+import com.shoppingmall.response.ReviewResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

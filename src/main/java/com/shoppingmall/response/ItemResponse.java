@@ -13,11 +13,11 @@ public class ItemResponse {
 
     private String itemName;
 
-    private int itemPrice;
+    private Integer itemPrice;
     private String itemColor;
 
-    private int pantsSize;
-    private int shoesSize;
+    private Integer pantsSize;
+    private Integer shoesSize;
     private TopSize topSize;
 
     public ItemResponse(Pants pants) {

@@ -13,10 +13,10 @@ public class ReviewResponse {
 
     private String content;
 
-    private int rating;
+    private Integer rating;
 
     @Builder
-    public ReviewResponse(String title, String content, int rating) {
+    public ReviewResponse(String title, String content, Integer rating) {
         this.title = title;
         this.content = content;
         this.rating = rating;

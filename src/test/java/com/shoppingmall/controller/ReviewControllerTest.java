@@ -205,8 +205,7 @@ class ReviewControllerTest {
 
             reviewRepository.saveAll(reviews);
             // expected
-            mockMvc.perform(get("/reviews?page=2")
-                            .contentType(APPLICATION_JSON))
+            mockMvc.perform(get("/reviews?page=2"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.length()", is(10)))
                     .andExpect(jsonPath("$[0].title").value("제목입니다 20"))

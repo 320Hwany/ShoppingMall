@@ -20,10 +20,10 @@ public class ReviewSave {
     private String content;
 
     @Min(value = 0, message = "0이상의 수를 입력해주세요.") @Max(value = 5, message = "5이하의 수를 입력해주세요.")
-    private int rating;
+    private Integer rating;
 
     @Builder
-    public ReviewSave(String title, String content, int rating) {
+    public ReviewSave(String title, String content, Integer rating) {
         this.title = title;
         this.content = content;
         this.rating = rating;
@@ -33,5 +33,13 @@ public class ReviewSave {
         this.title = review.getTitle();
         this.content = review.getContent();
         this.rating = review.getRating();
+    }
+
+    public Review toEntity() {
+        return Review.builder()
+                .title(title)
+                .content(content)
+                .rating(rating)
+                .build();
     }
 }

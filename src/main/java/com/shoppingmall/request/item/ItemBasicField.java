@@ -6,16 +6,16 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ItemRequest {
+public class ItemBasicField {
 
     private String itemName;
 
-    private int itemPrice;
+    private Integer itemPrice;
 
     private String itemColor;
 
     @Builder
-    public ItemRequest(String itemName, int itemPrice, String itemColor) {
+    public ItemBasicField(String itemName, Integer itemPrice, String itemColor) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemColor = itemColor;
