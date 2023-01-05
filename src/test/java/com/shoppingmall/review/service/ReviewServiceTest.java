@@ -7,7 +7,6 @@ import com.shoppingmall.review.dto.request.ReviewSave;
 import com.shoppingmall.review.dto.request.ReviewSearch;
 import com.shoppingmall.review.dto.request.ReviewUpdate;
 import com.shoppingmall.review.dto.response.ReviewResponse;
-import com.shoppingmall.review.service.ReviewService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Transactional
 class ReviewServiceTest {
 
     @Autowired
@@ -181,6 +179,7 @@ class ReviewServiceTest {
 
     @Nested
     @DisplayName("리뷰 수정 테스트 - Service")
+    @Transactional
     class UpdateReview {
         @BeforeEach
         void clean() {

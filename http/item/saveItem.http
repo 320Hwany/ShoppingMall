@@ -1,4 +1,4 @@
-### 바지 저장
+### 하의 저장
 
 POST http://localhost:8080/admin/item/pants
 Content-Type: application/json

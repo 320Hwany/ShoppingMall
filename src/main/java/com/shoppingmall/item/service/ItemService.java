@@ -1,12 +1,9 @@
 package com.shoppingmall.item.service;
 
 import com.shoppingmall.item.domain.item.Item;
+import com.shoppingmall.item.dto.request.*;
 import com.shoppingmall.item.exception.ItemNotFoundException;
 import com.shoppingmall.item.repository.ItemRepository;
-import com.shoppingmall.item.dto.request.ItemSearch;
-import com.shoppingmall.item.dto.request.PantsSave;
-import com.shoppingmall.item.dto.request.ShoesSave;
-import com.shoppingmall.item.dto.request.TopSave;
 import com.shoppingmall.item.dto.response.ItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -66,6 +63,42 @@ public class ItemService {
     public ItemResponse saveTop(TopSave topSave) {
         Item item = topSave.toEntity();
         itemRepository.save(item);
+        return getItemResponse(item);
+    }
+
+    @Transactional
+    public ItemResponse updatePants(Long itemId, PantsUpdate pantsUpdate) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(ItemNotFoundException::new);
+
+        ItemBasicField itemBasicField = new ItemBasicField(pantsUpdate);
+        item.updateBasicField(itemBasicField);
+        item.updatePantsEachField(pantsUpdate);
+
+        return getItemResponse(item);
+    }
+
+    @Transactional
+    public ItemResponse updateShoes(Long itemId, ShoesUpdate shoesUpdate) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(ItemNotFoundException::new);
+
+        ItemBasicField itemBasicField = new ItemBasicField(shoesUpdate);
+        item.updateBasicField(itemBasicField);
+        item.updateShoesEachField(shoesUpdate);
+
+        return getItemResponse(item);
+    }
+
+    @Transactional
+    public ItemResponse updateTop(Long itemId, TopUpdate topUpdate) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(ItemNotFoundException::new);
+
+        ItemBasicField itemBasicField = new ItemBasicField(topUpdate);
+        item.updateBasicField(itemBasicField);
+        item.updateTopEachField(topUpdate);
+
         return getItemResponse(item);
     }
 }

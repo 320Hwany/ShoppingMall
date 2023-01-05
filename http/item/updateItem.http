@@ -1,0 +1,11 @@
+### 하의 상품 수정
+
+PATCH http://localhost:8080/admin/item/pants/1
+Content-Type: application/json
+
+{
+  "itemName": "하의 수정",
+  "itemPrice": 50001,
+  "itemColor": "검정색 수정 ",
+  "pantsSize": 32
+}

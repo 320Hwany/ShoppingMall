@@ -1,8 +1,6 @@
 package com.shoppingmall.item.controller;
 
-import com.shoppingmall.item.dto.request.PantsSave;
-import com.shoppingmall.item.dto.request.ShoesSave;
-import com.shoppingmall.item.dto.request.TopSave;
+import com.shoppingmall.item.dto.request.*;
 import com.shoppingmall.item.dto.response.ItemResponse;
 import com.shoppingmall.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +31,27 @@ public class ItemControllerForAdmin {
     @PostMapping("/top")
     public ResponseEntity<ItemResponse> saveTop(@RequestBody @Valid TopSave topSave) {
         ItemResponse itemResponse = itemService.saveTop(topSave);
+        return ResponseEntity.ok(itemResponse);
+    }
+
+    @PatchMapping("/pants/{itemId}")
+    public ResponseEntity<ItemResponse> updatePants(@PathVariable Long itemId,
+                                                    @RequestBody @Valid PantsUpdate pantsUpdate) {
+        ItemResponse itemResponse = itemService.updatePants(itemId, pantsUpdate);
+        return ResponseEntity.ok(itemResponse);
+    }
+
+    @PatchMapping("/shoes/{itemId}")
+    public ResponseEntity<ItemResponse> updatePants(@PathVariable Long itemId,
+                                                    @RequestBody @Valid ShoesUpdate shoesUpdate) {
+        ItemResponse itemResponse = itemService.updateShoes(itemId, shoesUpdate);
+        return ResponseEntity.ok(itemResponse);
+    }
+
+    @PatchMapping("/top/{itemId}")
+    public ResponseEntity<ItemResponse> updatePants(@PathVariable Long itemId,
+                                                    @RequestBody @Valid TopUpdate topUpdate) {
+        ItemResponse itemResponse = itemService.updateTop(itemId, topUpdate);
         return ResponseEntity.ok(itemResponse);
     }
 }

@@ -1,6 +1,9 @@
 package com.shoppingmall.item.domain.item;
 
 import com.shoppingmall.item.dto.request.ItemBasicField;
+import com.shoppingmall.item.dto.request.PantsUpdate;
+import com.shoppingmall.item.dto.request.ShoesUpdate;
+import com.shoppingmall.item.dto.request.TopUpdate;
 import com.shoppingmall.item.dto.response.ItemResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,5 +44,20 @@ public abstract class Item {
             return new ItemResponse((Shoes) item);
         }
         return new ItemResponse((Top) item);
+    }
+
+    public void updateBasicField(ItemBasicField itemBasicField) {
+        this.itemName = itemBasicField.getItemName();
+        this.itemPrice = itemBasicField.getItemPrice();
+        this.itemColor = itemBasicField.getItemColor();
+    }
+
+    public void updatePantsEachField(PantsUpdate pantsUpdate) {
+    }
+
+    public void updateShoesEachField(ShoesUpdate shoesUpdate) {
+    }
+
+    public void updateTopEachField(TopUpdate topUpdate) {
     }
 }

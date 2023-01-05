@@ -2,6 +2,7 @@ package com.shoppingmall.item.domain.item;
 
 import com.shoppingmall.item.domain.item.size.TopSize;
 import com.shoppingmall.item.dto.request.ItemBasicField;
+import com.shoppingmall.item.dto.request.TopUpdate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,9 @@ public class Top extends Item {
     public Top(ItemBasicField itemBasicField, TopSize topSize) {
         super(itemBasicField);
         this.topSize = topSize;
+    }
+
+    public void updateTopEachField(TopUpdate topUpdate) {
+        this.topSize = topUpdate.getTopSize();
     }
 }
