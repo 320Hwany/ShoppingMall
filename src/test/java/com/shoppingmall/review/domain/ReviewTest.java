@@ -1,4 +1,4 @@
-package com.shoppingmall.domain;
+package com.shoppingmall.review.domain;
 
 import com.shoppingmall.review.dto.request.ReviewUpdate;
 import com.shoppingmall.review.domain.Review;

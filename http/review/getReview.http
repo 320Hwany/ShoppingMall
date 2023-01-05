@@ -1,0 +1,15 @@
+### 상품 찾기 - 단건 조회
+
+GET http://localhost:8080/review/1
+
+### 리뷰 찾기 - 최신순
+
+GET http://localhost:8080/reviews-latest?page=1
+
+### 리뷰 찾기 - 평점 낮은순
+
+GET http://localhost:8080/reviews-lowRating?page=1
+
+### 리뷰 찾기 - 평점 높은순
+
+GET http://localhost:8080/reviews-highRating?page=1

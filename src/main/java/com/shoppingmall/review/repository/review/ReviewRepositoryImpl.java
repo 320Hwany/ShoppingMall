@@ -16,11 +16,29 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Review> getReviews(ReviewSearch reviewSearch) {
+    public List<Review> getReviewsByLatest(ReviewSearch reviewSearch) {
         return jpaQueryFactory.selectFrom(review)
                 .limit(reviewSearch.getLimit())
                 .offset(reviewSearch.getOffset())
                 .orderBy(review.id.desc())
+                .fetch();
+    }
+
+    @Override
+    public List<Review> getReviewsByLowRating(ReviewSearch reviewSearch) {
+        return jpaQueryFactory.selectFrom(review)
+                .limit(reviewSearch.getLimit())
+                .offset(reviewSearch.getOffset())
+                .orderBy(review.rating.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<Review> getReviewsByHighRating(ReviewSearch reviewSearch) {
+        return jpaQueryFactory.selectFrom(review)
+                .limit(reviewSearch.getLimit())
+                .offset(reviewSearch.getOffset())
+                .orderBy(review.rating.desc())
                 .fetch();
     }
 }

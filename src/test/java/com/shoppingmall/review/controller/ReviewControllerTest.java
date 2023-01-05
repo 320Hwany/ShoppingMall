@@ -1,4 +1,4 @@
-package com.shoppingmall.controller;
+package com.shoppingmall.review.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingmall.review.domain.Review;
@@ -192,7 +192,7 @@ class ReviewControllerTest {
         }
 
         @Test
-        @DisplayName("원하는 페이지를 보여줍니다. 한 페이지당 10개의 게시글이 있습니다.")
+        @DisplayName("리뷰를 최신 순으로 한 페이지를 보여줍니다. 한 페이지당 10개의 게시글이 있습니다.")
         void readReviewsSuccess() throws Exception {
             // given
             List<Review> reviews = IntStream.rangeClosed(1, 30)
@@ -205,7 +205,7 @@ class ReviewControllerTest {
 
             reviewRepository.saveAll(reviews);
             // expected
-            mockMvc.perform(get("/reviews?page=2"))
+            mockMvc.perform(get("/reviews-latest?page=2"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.length()", is(10)))
                     .andExpect(jsonPath("$[0].title").value("제목입니다 20"))

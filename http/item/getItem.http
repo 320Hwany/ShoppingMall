@@ -1,0 +1,15 @@
+### 상품 찾기 - 단건 조회
+
+GET http://localhost:8080/item/1
+
+### 상품 여러개 찾기 - 최신순
+
+GET http://localhost:8080/items-latest?page=1
+
+### 상품 여러개 찾기 - 가격 낮은 순
+
+GET http://localhost:8080/items-lowPrice?page=1
+
+### 상품 여러개 찾기 - 가격 높은 순
+
+GET http://localhost:8080/items-highPrice?page=1

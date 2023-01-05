@@ -7,5 +7,9 @@ import java.util.List;
 
 public interface ReviewRepositoryCustom {
 
-    List<Review> getReviews(ReviewSearch reviewSearch);
+    List<Review> getReviewsByLatest(ReviewSearch reviewSearch);
+
+    List<Review> getReviewsByHighRating(ReviewSearch reviewSearch);
+
+    List<Review> getReviewsByLowRating(ReviewSearch reviewSearch);
 }

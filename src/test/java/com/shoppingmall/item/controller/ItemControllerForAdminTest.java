@@ -1,4 +1,4 @@
-package com.shoppingmall.controller;
+package com.shoppingmall.item.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingmall.item.repository.ItemRepository;

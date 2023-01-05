@@ -30,9 +30,21 @@ public class ReviewController {
         return ResponseEntity.ok(reviewResponse);
     }
 
-    @GetMapping("/reviews")
-    public ResponseEntity<List<ReviewResponse>> getReviews(@ModelAttribute ReviewSearch reviewSearch) {
-        List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponse(reviewSearch);
+    @GetMapping("/reviews-latest")
+    public ResponseEntity<List<ReviewResponse>> getReviewsByLatest(@ModelAttribute ReviewSearch reviewSearch) {
+        List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponseByLatest(reviewSearch);
+        return ResponseEntity.ok(reviewsResponse);
+    }
+
+    @GetMapping("/reviews-lowRating")
+    public ResponseEntity<List<ReviewResponse>> getReviewsByLowRating(@ModelAttribute ReviewSearch reviewSearch) {
+        List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponseByLowRating(reviewSearch);
+        return ResponseEntity.ok(reviewsResponse);
+    }
+
+    @GetMapping("/reviews-highRating")
+    public ResponseEntity<List<ReviewResponse>> getReviewsByHighRating(@ModelAttribute ReviewSearch reviewSearch) {
+        List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponseByHighRating(reviewSearch);
         return ResponseEntity.ok(reviewsResponse);
     }
 

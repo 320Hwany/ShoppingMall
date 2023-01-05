@@ -1,4 +1,4 @@
-package com.shoppingmall.service;
+package com.shoppingmall.review.service;
 
 import com.shoppingmall.review.domain.Review;
 import com.shoppingmall.review.exception.ReviewNotFoundException;
@@ -96,8 +96,8 @@ class ReviewServiceTest {
         }
 
         @Test
-        @DisplayName("리뷰 조회 - 한 페이지 조회")
-        void readReviews() {
+        @DisplayName("리뷰 한 페이지 조회 - 최신순")
+        void readReviewsByLatest() {
             // given
             List<Review> reviews = IntStream.rangeClosed(1, 30)
                     .mapToObj(i -> Review.builder()
@@ -114,12 +114,68 @@ class ReviewServiceTest {
                     .build();
 
             // when
-            List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponse(reviewSearch);
+            List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponseByLatest(reviewSearch);
 
             // then
             assertThat(reviewsResponse.size()).isEqualTo(10);
             assertThat(reviewsResponse.get(0).getTitle()).isEqualTo("제목입니다. " + 20);
             assertThat(reviewsResponse.get(0).getContent()).isEqualTo("내용입니다. " + 20);
+        }
+
+        @Test
+        @DisplayName("리뷰 한 페이지 조회 - 평점 낮은순")
+        void readReviewsByLowRating() {
+            // given
+            List<Review> reviews = IntStream.rangeClosed(1, 5)
+                    .mapToObj(i -> Review.builder()
+                            .title("제목입니다. " + i)
+                            .content("내용입니다. " + i)
+                            .rating(i)
+                            .build())
+                    .collect(Collectors.toList());
+
+            reviewRepository.saveAll(reviews);
+
+            ReviewSearch reviewSearch = ReviewSearch.builder()
+                    .page(1)
+                    .build();
+
+            //
+            List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponseByLowRating(reviewSearch);
+
+            // then
+            assertThat(reviewsResponse.size()).isEqualTo(5);
+            assertThat(reviewsResponse.get(0).getTitle()).isEqualTo("제목입니다. " + 1);
+            assertThat(reviewsResponse.get(0).getContent()).isEqualTo("내용입니다. " + 1);
+            assertThat(reviewsResponse.get(0).getRating()).isEqualTo(1);
+        }
+
+        @Test
+        @DisplayName("리뷰 한 페이지 조회 - 평점 높응ㄴ순")
+        void readReviewsByHighRating() {
+            // given
+            List<Review> reviews = IntStream.rangeClosed(1, 5)
+                    .mapToObj(i -> Review.builder()
+                            .title("제목입니다. " + i)
+                            .content("내용입니다. " + i)
+                            .rating(i)
+                            .build())
+                    .collect(Collectors.toList());
+
+            reviewRepository.saveAll(reviews);
+
+            ReviewSearch reviewSearch = ReviewSearch.builder()
+                    .page(1)
+                    .build();
+
+            //
+            List<ReviewResponse> reviewsResponse = reviewService.getReviewsResponseByHighRating(reviewSearch);
+
+            // then
+            assertThat(reviewsResponse.size()).isEqualTo(5);
+            assertThat(reviewsResponse.get(0).getTitle()).isEqualTo("제목입니다. " + 5);
+            assertThat(reviewsResponse.get(0).getContent()).isEqualTo("내용입니다. " + 5);
+            assertThat(reviewsResponse.get(0).getRating()).isEqualTo(5);
         }
     }
 

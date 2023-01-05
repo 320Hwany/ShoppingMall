@@ -35,8 +35,20 @@ public class ReviewService {
         return new ReviewResponse(review);
     }
 
-    public List<ReviewResponse> getReviewsResponse(ReviewSearch reviewSearch) {
-        return reviewRepository.getReviews(reviewSearch).stream()
+    public List<ReviewResponse> getReviewsResponseByLatest(ReviewSearch reviewSearch) {
+        return reviewRepository.getReviewsByLatest(reviewSearch).stream()
+                .map(ReviewResponse::new)
+                .collect(toList());
+    }
+
+    public List<ReviewResponse> getReviewsResponseByLowRating(ReviewSearch reviewSearch) {
+        return reviewRepository.getReviewsByLowRating(reviewSearch).stream()
+                .map(ReviewResponse::new)
+                .collect(toList());
+    }
+
+    public List<ReviewResponse> getReviewsResponseByHighRating(ReviewSearch reviewSearch) {
+        return reviewRepository.getReviewsByHighRating(reviewSearch).stream()
                 .map(ReviewResponse::new)
                 .collect(toList());
     }

@@ -1,4 +1,4 @@
-package com.shoppingmall.service;
+package com.shoppingmall.item.service;
 
 import com.shoppingmall.item.domain.item.Shoes;
 import com.shoppingmall.item.exception.ItemNotFoundException;

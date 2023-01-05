@@ -1,4 +1,4 @@
-package com.shoppingmall.controller;
+package com.shoppingmall.item.controller;
 
 import com.shoppingmall.item.domain.item.Shoes;
 import com.shoppingmall.item.repository.ItemRepository;

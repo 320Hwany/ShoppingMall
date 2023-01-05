@@ -1,0 +1,32 @@
+### 리뷰 저장 - 1
+
+POST http://localhost:8080/review-save
+Content-Type: application/json
+
+{
+  "title": "제목입니다 1",
+  "content": "내용입니다 1",
+  "rating": 1
+}
+
+### 리뷰 저장 - 2
+
+POST http://localhost:8080/review-save
+Content-Type: application/json
+
+{
+  "title": "제목입니다 2",
+  "content": "내용입니다 2",
+  "rating": 2
+}
+
+### 리뷰 저장 - 3
+
+POST http://localhost:8080/review-save
+Content-Type: application/json
+
+{
+  "title": "제목입니다 3",
+  "content": "내용입니다 3",
+  "rating": 3
+}

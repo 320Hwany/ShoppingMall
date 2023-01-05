@@ -1,0 +1,35 @@
+### 바지 저장
+
+POST http://localhost:8080/admin/item/pants
+Content-Type: application/json
+
+{
+  "itemName": "하의",
+  "itemPrice": 50000,
+  "itemColor": "검정색",
+  "pantsSize": 30
+}
+
+### 상의 저장
+
+POST http://localhost:8080/admin/item/top
+Content-Type: application/json
+
+{
+  "itemName": "상의",
+  "itemPrice": 60000,
+  "itemColor": "흰색",
+  "topSize": "MEDIUM"
+}
+
+### 신발 저장
+
+POST http://localhost:8080/admin/item/shoes
+Content-Type: application/json
+
+{
+  "itemName": "신발",
+  "itemPrice": 70000,
+  "itemColor": "빨간색",
+  "shoesSize": 270
+}

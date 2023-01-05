@@ -1,0 +1,10 @@
+### 리뷰 수정
+
+PATCH http://localhost:8080/review/1
+Content-Type: application/json
+
+{
+  "title": "제목 수정입니다.",
+  "content": "내용 수정입니다.",
+  "rating": 5
+}
