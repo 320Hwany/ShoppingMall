@@ -1,6 +1,7 @@
 package com.shoppingmall.domain;
 
-import com.shoppingmall.request.review.ReviewUpdate;
+import com.shoppingmall.review.dto.request.ReviewUpdate;
+import com.shoppingmall.review.domain.Review;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

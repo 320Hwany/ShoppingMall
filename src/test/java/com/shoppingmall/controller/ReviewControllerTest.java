@@ -1,10 +1,10 @@
 package com.shoppingmall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shoppingmall.domain.Review;
-import com.shoppingmall.repository.review.ReviewRepository;
-import com.shoppingmall.request.review.ReviewSave;
-import com.shoppingmall.request.review.ReviewUpdate;
+import com.shoppingmall.review.domain.Review;
+import com.shoppingmall.review.repository.review.ReviewRepository;
+import com.shoppingmall.review.dto.request.ReviewSave;
+import com.shoppingmall.review.dto.request.ReviewUpdate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

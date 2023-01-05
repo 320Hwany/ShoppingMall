@@ -1,10 +1,10 @@
 package com.shoppingmall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shoppingmall.repository.item.ItemRepository;
-import com.shoppingmall.request.item.PantsSave;
-import com.shoppingmall.request.item.ShoesSave;
-import com.shoppingmall.request.item.TopSave;
+import com.shoppingmall.item.repository.ItemRepository;
+import com.shoppingmall.item.dto.request.PantsSave;
+import com.shoppingmall.item.dto.request.ShoesSave;
+import com.shoppingmall.item.dto.request.TopSave;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.shoppingmall.domain.item.size.TopSize.MEDIUM;
+import static com.shoppingmall.item.domain.item.size.TopSize.MEDIUM;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

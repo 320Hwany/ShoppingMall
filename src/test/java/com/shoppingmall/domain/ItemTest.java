@@ -1,9 +1,9 @@
 package com.shoppingmall.domain;
 
-import com.shoppingmall.domain.item.Item;
-import com.shoppingmall.domain.item.Shoes;
-import com.shoppingmall.request.item.ItemBasicField;
-import com.shoppingmall.response.ItemResponse;
+import com.shoppingmall.item.domain.item.Item;
+import com.shoppingmall.item.domain.item.Shoes;
+import com.shoppingmall.item.dto.request.ItemBasicField;
+import com.shoppingmall.item.dto.response.ItemResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

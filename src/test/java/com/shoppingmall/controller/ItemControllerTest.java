@@ -1,9 +1,8 @@
 package com.shoppingmall.controller;
 
-import com.shoppingmall.domain.item.Shoes;
-import com.shoppingmall.repository.item.ItemRepository;
-import com.shoppingmall.request.item.ItemBasicField;
-import com.shoppingmall.request.item.PantsSave;
+import com.shoppingmall.item.domain.item.Shoes;
+import com.shoppingmall.item.repository.ItemRepository;
+import com.shoppingmall.item.dto.request.ItemBasicField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

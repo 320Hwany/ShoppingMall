@@ -1,19 +1,20 @@
 package com.shoppingmall.service;
 
-import com.shoppingmall.domain.item.Shoes;
-import com.shoppingmall.exception.e404.ItemNotFoundException;
-import com.shoppingmall.repository.item.ItemRepository;
-import com.shoppingmall.request.item.ItemBasicField;
-import com.shoppingmall.request.item.PantsSave;
-import com.shoppingmall.request.item.ShoesSave;
-import com.shoppingmall.request.item.TopSave;
-import com.shoppingmall.response.ItemResponse;
+import com.shoppingmall.item.domain.item.Shoes;
+import com.shoppingmall.item.exception.ItemNotFoundException;
+import com.shoppingmall.item.repository.ItemRepository;
+import com.shoppingmall.item.dto.request.ItemBasicField;
+import com.shoppingmall.item.dto.request.PantsSave;
+import com.shoppingmall.item.dto.request.ShoesSave;
+import com.shoppingmall.item.dto.request.TopSave;
+import com.shoppingmall.item.dto.response.ItemResponse;
+import com.shoppingmall.item.service.ItemService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.shoppingmall.domain.item.size.TopSize.MEDIUM;
+import static com.shoppingmall.item.domain.item.size.TopSize.MEDIUM;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

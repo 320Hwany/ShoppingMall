@@ -1,12 +1,13 @@
 package com.shoppingmall.service;
 
-import com.shoppingmall.domain.Review;
-import com.shoppingmall.exception.e404.ReviewNotFoundException;
-import com.shoppingmall.repository.review.ReviewRepository;
-import com.shoppingmall.request.review.ReviewSave;
-import com.shoppingmall.request.review.ReviewSearch;
-import com.shoppingmall.request.review.ReviewUpdate;
-import com.shoppingmall.response.ReviewResponse;
+import com.shoppingmall.review.domain.Review;
+import com.shoppingmall.review.exception.ReviewNotFoundException;
+import com.shoppingmall.review.repository.review.ReviewRepository;
+import com.shoppingmall.review.dto.request.ReviewSave;
+import com.shoppingmall.review.dto.request.ReviewSearch;
+import com.shoppingmall.review.dto.request.ReviewUpdate;
+import com.shoppingmall.review.dto.response.ReviewResponse;
+import com.shoppingmall.review.service.ReviewService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
