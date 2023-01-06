@@ -101,4 +101,11 @@ public class ItemService {
 
         return getItemResponse(item);
     }
+
+    @Transactional
+    public void deletePants(Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(ItemNotFoundException::new);
+        itemRepository.delete(item);
+    }
 }

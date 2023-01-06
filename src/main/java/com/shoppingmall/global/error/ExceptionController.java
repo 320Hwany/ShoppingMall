@@ -1,5 +1,6 @@
 package com.shoppingmall.global.error;
 
+import com.shoppingmall.auth.exception.UnauthorizedException;
 import com.shoppingmall.item.exception.ItemNotFoundException;
 import com.shoppingmall.global.exception.NotFoundException;
 import com.shoppingmall.review.exception.ReviewNotFoundException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -49,5 +51,16 @@ public class ExceptionController {
                 .build();
 
         return ResponseEntity.status(NOT_FOUND).body(errorResponse);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> Unauthorized(UnauthorizedException e) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(e.getStatusCode())
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(UNAUTHORIZED).body(errorResponse);
     }
 }

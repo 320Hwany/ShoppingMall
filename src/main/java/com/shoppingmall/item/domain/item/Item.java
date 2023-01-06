@@ -22,6 +22,7 @@ public abstract class Item {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "item_id")
     private Long id;
 
     private String itemName;

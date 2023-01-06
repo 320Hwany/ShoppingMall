@@ -1,11 +1,15 @@
 package com.shoppingmall.item.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shoppingmall.auth.domain.LoginToken;
+import com.shoppingmall.auth.repository.LoginTokenRepository;
 import com.shoppingmall.item.domain.item.Pants;
 import com.shoppingmall.item.domain.item.Shoes;
 import com.shoppingmall.item.domain.item.Top;
 import com.shoppingmall.item.dto.request.*;
 import com.shoppingmall.item.repository.ItemRepository;
+import com.shoppingmall.member.domain.Member;
+import com.shoppingmall.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -15,12 +19,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+
 import static com.shoppingmall.item.domain.item.size.TopSize.LARGE;
 import static com.shoppingmall.item.domain.item.size.TopSize.MEDIUM;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,6 +46,7 @@ class ItemControllerForAdminTest {
     @Nested
     @DisplayName("상품 저장 테스트 - ControllerForAdmin")
     class SaveItem {
+
         @BeforeEach
         void clean() {
             itemRepository.deleteAll();
@@ -413,6 +419,54 @@ class ItemControllerForAdminTest {
                     .andDo(print());
 
             assertThat(itemRepository.count()).isEqualTo(1);
+        }
+    }
+
+    @Nested
+    @DisplayName("상품 삭제 테스트 - Controller")
+    class DeleteItem {
+
+        private ItemBasicField itemBasicField = ItemBasicField.builder()
+                .itemName("상품명")
+                .itemPrice(50000)
+                .itemColor("검정색")
+                .build();
+
+        @BeforeEach
+        void clean() {
+            itemRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("상품 삭제 테스트 - 성공")
+        void deleteItem() throws Exception {
+            // given
+            Pants pants = Pants.builder()
+                    .itemBasicField(itemBasicField)
+                    .pantsSize(30)
+                    .build();
+
+            itemRepository.save(pants);
+
+            // expected
+            mockMvc.perform(delete("/admin/item/{itemId}", pants.getId()))
+                    .andExpect(status().isOk())
+                    .andDo(print());
+
+            assertThat(itemRepository.count()).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("삭제하려는 상품이 없으면 오류가 발생합니다 - 실패")
+        void deleteItemFail() throws Exception {
+            // expected
+            mockMvc.perform(delete("/admin/item/{itemId}", 1L))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.code").value("404"))
+                    .andExpect(jsonPath("$.message").value("상품을 찾을 수 없습니다."))
+                    .andDo(print());
+
+            assertThat(itemRepository.count()).isEqualTo(0);
         }
     }
 }

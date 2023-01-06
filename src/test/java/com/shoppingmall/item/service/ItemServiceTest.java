@@ -18,6 +18,10 @@ import static com.shoppingmall.item.domain.item.size.TopSize.MEDIUM;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 class ItemServiceTest {
@@ -296,6 +300,48 @@ class ItemServiceTest {
             // expected
             assertThrows(ItemNotFoundException.class,
                     () -> itemService.updateTop(1L, topUpdate));
+        }
+    }
+
+    @Nested
+    @DisplayName("상품 삭제 테스트 - Service")
+    class DeleteItem {
+
+        private ItemBasicField itemBasicField = ItemBasicField.builder()
+                .itemName("상품명")
+                .itemPrice(50000)
+                .itemColor("검정색")
+                .build();
+
+        @BeforeEach
+        void clean() {
+            itemRepository.deleteAll();
+        }
+
+        @Test
+        @DisplayName("상품 삭제 테스트 - 성공")
+        void deleteItem() {
+            // given
+            Pants pants = Pants.builder()
+                    .itemBasicField(itemBasicField)
+                    .pantsSize(30)
+                    .build();
+
+            itemRepository.save(pants);
+
+            // expected
+            itemService.deletePants(pants.getId());
+
+            assertThat(itemRepository.count()).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("삭제하려는 상품이 없으면 오류가 발생합니다 - 실패")
+        void deleteItemFail() {
+            // expected
+            assertThrows(ItemNotFoundException.class,
+                    () -> itemService.deletePants(1L));
+            assertThat(itemRepository.count()).isEqualTo(0);
         }
     }
 }

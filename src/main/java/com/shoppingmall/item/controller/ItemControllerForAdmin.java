@@ -1,5 +1,6 @@
 package com.shoppingmall.item.controller;
 
+import com.shoppingmall.auth.dto.request.UserSession;
 import com.shoppingmall.item.dto.request.*;
 import com.shoppingmall.item.dto.response.ItemResponse;
 import com.shoppingmall.item.service.ItemService;
@@ -53,5 +54,10 @@ public class ItemControllerForAdmin {
                                                     @RequestBody @Valid TopUpdate topUpdate) {
         ItemResponse itemResponse = itemService.updateTop(itemId, topUpdate);
         return ResponseEntity.ok(itemResponse);
+    }
+
+    @DeleteMapping("/{itemId}")
+    public void deleteItem(@PathVariable Long itemId) {
+        itemService.deletePants(itemId);
     }
 }

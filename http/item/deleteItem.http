@@ -1,0 +1,3 @@
+### 상품 삭제
+
+DELETE http://localhost:8080/admin/item/1
