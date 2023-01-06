@@ -196,13 +196,13 @@ class ReviewServiceTest {
                     .rating(3)
                     .build();
 
-            reviewRepository.save(review);
-
             ReviewUpdate reviewUpdate = ReviewUpdate.builder()
                     .title("제목 수정입니다.")
                     .content("내용 수정입니다.")
                     .rating(5)
                     .build();
+
+            reviewRepository.save(review);
 
             // when
             reviewService.updateReview(review.getId(), reviewUpdate);
