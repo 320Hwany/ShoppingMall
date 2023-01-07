@@ -1,15 +1,11 @@
 package com.shoppingmall.item.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shoppingmall.auth.domain.LoginToken;
-import com.shoppingmall.auth.repository.LoginTokenRepository;
 import com.shoppingmall.item.domain.item.Pants;
 import com.shoppingmall.item.domain.item.Shoes;
 import com.shoppingmall.item.domain.item.Top;
 import com.shoppingmall.item.dto.request.*;
 import com.shoppingmall.item.repository.ItemRepository;
-import com.shoppingmall.member.domain.Member;
-import com.shoppingmall.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
 
 import static com.shoppingmall.item.domain.item.size.TopSize.LARGE;
 import static com.shoppingmall.item.domain.item.size.TopSize.MEDIUM;

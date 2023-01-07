@@ -1,6 +1,6 @@
 package com.shoppingmall.global.error;
 
-import com.shoppingmall.auth.exception.UnauthorizedException;
+import com.shoppingmall.member.exception.UnauthorizedException;
 import com.shoppingmall.item.exception.ItemNotFoundException;
 import com.shoppingmall.global.exception.NotFoundException;
 import com.shoppingmall.review.exception.ReviewNotFoundException;

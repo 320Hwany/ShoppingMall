@@ -1,4 +1,4 @@
-package com.shoppingmall.auth.dto.request;
+package com.shoppingmall.member.dto.request;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Getter
-public class LoginRequest {
+public class MemberLogin {
 
     @Email(message = "이메일을 입력해주세요")
     private String email;

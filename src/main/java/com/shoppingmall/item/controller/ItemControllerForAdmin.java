@@ -1,6 +1,5 @@
 package com.shoppingmall.item.controller;
 
-import com.shoppingmall.auth.dto.request.UserSession;
 import com.shoppingmall.item.dto.request.*;
 import com.shoppingmall.item.dto.response.ItemResponse;
 import com.shoppingmall.item.service.ItemService;

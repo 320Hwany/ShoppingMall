@@ -1,9 +1,9 @@
 package com.shoppingmall.global.config;
 
-import com.shoppingmall.auth.domain.LoginToken;
-import com.shoppingmall.auth.dto.request.UserSession;
-import com.shoppingmall.auth.exception.UnauthorizedException;
-import com.shoppingmall.auth.repository.LoginTokenRepository;
+import com.shoppingmall.member.domain.Session;
+import com.shoppingmall.member.dto.request.MemberSession;
+import com.shoppingmall.member.exception.UnauthorizedException;
+import com.shoppingmall.member.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class AuthResolver implements HandlerMethodArgumentResolver {
 
-    private final LoginTokenRepository loginTokenRepository;
+    private final SessionRepository sessionRepository;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(UserSession.class);
+        return parameter.getParameterType().equals(MemberSession.class);
     }
 
     @Override
@@ -36,11 +36,11 @@ public class AuthResolver implements HandlerMethodArgumentResolver {
         Cookie[] cookies = httpServletRequest.getCookies();
         String accessToken = cookies[0].getValue();
 
-        LoginToken loginToken = loginTokenRepository.findByAccessToken(accessToken)
+        Session session = sessionRepository.findByAccessToken(accessToken)
                 .orElseThrow(UnauthorizedException::new);
 
-        return UserSession.builder()
-                .id(loginToken.getMember().getId())
+        return MemberSession.builder()
+                .id(session.getMember().getId())
                 .build();
     }
 }

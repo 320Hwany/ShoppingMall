@@ -1,15 +1,15 @@
-package com.shoppingmall.auth.dto.request;
+package com.shoppingmall.member.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserSession {
+public class MemberSession {
 
     private Long id;
 
     @Builder
-    public UserSession(Long id) {
+    public MemberSession(Long id) {
         this.id = id;
     }
 }

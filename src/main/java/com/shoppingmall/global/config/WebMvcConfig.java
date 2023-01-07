@@ -1,6 +1,6 @@
 package com.shoppingmall.global.config;
 
-import com.shoppingmall.auth.repository.LoginTokenRepository;
+import com.shoppingmall.member.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -12,10 +12,10 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final LoginTokenRepository loginTokenRepository;
+    private final SessionRepository sessionRepository;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new AuthResolver(loginTokenRepository));
+        resolvers.add(new AuthResolver(sessionRepository));
     }
 }

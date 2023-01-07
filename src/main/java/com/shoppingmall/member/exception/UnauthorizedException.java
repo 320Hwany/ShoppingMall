@@ -1,4 +1,4 @@
-package com.shoppingmall.auth.exception;
+package com.shoppingmall.member.exception;
 
 import lombok.Getter;
 

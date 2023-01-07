@@ -1,6 +1,5 @@
 package com.shoppingmall.member.domain;
 
-import com.shoppingmall.auth.domain.LoginToken;
 import com.shoppingmall.member.dto.request.MemberSignup;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,15 +30,15 @@ public class Member {
     private Integer age;
 
     @OneToMany(mappedBy = "member", cascade = ALL)
-    private List<LoginToken> loginTokenList = new ArrayList<>();
+    private List<Session> sessionList = new ArrayList<>();
 
     @Builder
-    public Member(String name, String email, String password, Integer age, List<LoginToken> loginTokenList) {
+    public Member(String name, String email, String password, Integer age, List<Session> sessionList) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
-        this.loginTokenList = loginTokenList;
+        this.sessionList = sessionList;
     }
 
     public Member(MemberSignup memberSignup) {
@@ -49,13 +48,12 @@ public class Member {
         this.age = memberSignup.getAge();
     }
 
-    public LoginToken addLoginToken() {
-        LoginToken loginToken = LoginToken.builder()
+    public Session addSession() {
+        Session session = Session.builder()
                 .member(this)
                 .build();
+        sessionList.add(session);
 
-        loginTokenList.add(loginToken);
-
-        return loginToken;
+        return session;
     }
 }
