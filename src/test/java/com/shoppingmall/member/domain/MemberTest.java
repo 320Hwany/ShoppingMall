@@ -11,7 +11,7 @@ class MemberTest {
 
     @Test
     @DisplayName("세션 생성 테스트 - domain")
-    void addLoginToken() {
+    void addSession() {
         // given
         Member member = Member.builder()
                 .name("회원이름")
@@ -21,7 +21,10 @@ class MemberTest {
                 .sessionList(new ArrayList<>())
                 .build();
 
+        Session session = member.addSession();
         // expected
-        assertThat(member.addSession()).isEqualTo(member.getSessionList().get(0));
+        assertThat(session.getMember()).isEqualTo(member);
+        assertThat(member.getSessionList().size()).isEqualTo(1);
+        assertThat(member.getSessionList().get(0)).isEqualTo(session);
     }
 }

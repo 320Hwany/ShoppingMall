@@ -12,14 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
     @Transactional
-    public MemberResponse save(MemberSignup memberSignup) {
+    public MemberResponse signup(MemberSignup memberSignup) {
         Member member = new Member(memberSignup);
         memberRepository.save(member);
         return new MemberResponse(member);
