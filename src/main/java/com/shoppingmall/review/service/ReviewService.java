@@ -23,7 +23,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     @Transactional
-    public ReviewResponse reviewSave(ReviewSave reviewSave) {
+    public ReviewResponse saveReview(ReviewSave reviewSave) {
         Review review = reviewSave.toEntity();
         reviewRepository.save(review);
         return new ReviewResponse(review);

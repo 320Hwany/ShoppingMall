@@ -194,7 +194,7 @@ class ReviewControllerTest {
         @DisplayName("리뷰를 최신 순으로 한 페이지를 보여줍니다. 한 페이지당 10개의 게시글이 있습니다.")
         void readReviewsSuccess() throws Exception {
             // given
-            List<Review> reviews = IntStream.rangeClosed(1, 30)
+            List<Review> reviews = IntStream.range(1, 31)
                     .mapToObj(i -> Review.builder()
                             .title("제목입니다 " + i)
                             .content("내용입니다 " + i)

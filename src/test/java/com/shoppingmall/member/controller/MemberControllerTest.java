@@ -5,6 +5,7 @@ import com.shoppingmall.member.domain.Member;
 import com.shoppingmall.member.dto.request.MemberLogin;
 import com.shoppingmall.member.dto.request.MemberSignup;
 import com.shoppingmall.member.repository.MemberRepository;
+import com.shoppingmall.member.repository.SessionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -31,6 +30,9 @@ class MemberControllerTest {
     private MemberRepository memberRepository;
 
     @Autowired
+    private SessionRepository sessionRepository;
+
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -41,6 +43,7 @@ class MemberControllerTest {
     class Signup {
         @BeforeEach
         void clean() {
+            sessionRepository.deleteAll();
             memberRepository.deleteAll();
         }
 
@@ -106,11 +109,11 @@ class MemberControllerTest {
                 .email("yhwjd99@gmail.com")
                 .password("1234")
                 .age(25)
-                .sessionList(new ArrayList<>())
                 .build();
 
         @BeforeEach
         void clean() {
+            sessionRepository.deleteAll();
             memberRepository.deleteAll();
         }
 

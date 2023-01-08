@@ -1,6 +1,6 @@
 package com.shoppingmall.member.domain;
 
-import com.shoppingmall.member.domain.Member;
+import com.shoppingmall.utils.AccessTokenHolder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 import java.time.Duration;
 
-import static java.util.UUID.*;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.*;
 
 @Getter
@@ -23,19 +23,19 @@ public class Session {
     @Column(name = "session_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     private String accessToken;
 
     @Builder
-    public Session(Member member) {
+    public Session(Member member, AccessTokenHolder accessTokenHolder) {
         this.member = member;
-        this.accessToken = randomUUID().toString();
+        this.accessToken = accessTokenHolder.getAccessToken();
     }
 
-    public static ResponseCookie setCookie(String accessToken) {
+    public ResponseCookie setCookie() {
         ResponseCookie cookie = ResponseCookie.from("SESSION", accessToken)
                 .domain("localhost")
                 .path("/")

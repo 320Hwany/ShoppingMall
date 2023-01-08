@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Getter
@@ -29,16 +25,12 @@ public class Member {
 
     private Integer age;
 
-    @OneToMany(mappedBy = "member", cascade = ALL)
-    private List<Session> sessionList = new ArrayList<>();
-
     @Builder
-    public Member(String name, String email, String password, Integer age, List<Session> sessionList) {
+    public Member(String name, String email, String password, Integer age) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
-        this.sessionList = sessionList;
     }
 
     public Member(MemberSignup memberSignup) {
@@ -46,14 +38,5 @@ public class Member {
         this.email = memberSignup.getEmail();
         this.password = memberSignup.getPassword();
         this.age = memberSignup.getAge();
-    }
-
-    public Session addSession() {
-        Session session = Session.builder()
-                .member(this)
-                .build();
-        sessionList.add(session);
-
-        return session;
     }
 }

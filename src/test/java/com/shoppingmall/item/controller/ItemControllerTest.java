@@ -85,7 +85,7 @@ class ItemControllerTest {
         @DisplayName("상품의 한 페이지를 보여줍니다. - 최신순")
         void getItemsByLatest() throws Exception {
             // given
-            List<ItemBasicField> itemBasicFieldList = IntStream.rangeClosed(1, 30)
+            List<ItemBasicField> itemBasicFieldList = IntStream.range(1, 31)
                     .mapToObj(i -> ItemBasicField.builder()
                             .itemName("상품명 " + i)
                             .itemPrice(10000 + i)
@@ -93,7 +93,7 @@ class ItemControllerTest {
                             .build())
                     .collect(toList());
 
-            List<Shoes> shoesList = IntStream.rangeClosed(1, 30)
+            List<Shoes> shoesList = IntStream.range(1, 31)
                     .mapToObj(i -> Shoes.builder()
                             .itemBasicField(itemBasicFieldList.get(i - 1))
                             .shoesSize(220 + i)
@@ -116,7 +116,7 @@ class ItemControllerTest {
         @DisplayName("상품의 한 페이지를 보여줍니다. - 가격 낮은 순")
         void getItemsByLowPrice() throws Exception {
             // given
-            List<ItemBasicField> itemBasicFieldList = IntStream.rangeClosed(1, 30)
+            List<ItemBasicField> itemBasicFieldList = IntStream.range(1, 31)
                     .mapToObj(i -> ItemBasicField.builder()
                             .itemName("상품명 " + i)
                             .itemPrice(10000 + i)
@@ -124,7 +124,7 @@ class ItemControllerTest {
                             .build())
                     .collect(toList());
 
-            List<Shoes> shoesList = IntStream.rangeClosed(1, 30)
+            List<Shoes> shoesList = IntStream.range(1, 31)
                     .mapToObj(i -> Shoes.builder()
                             .itemBasicField(itemBasicFieldList.get(i - 1))
                             .shoesSize(220 + i)
@@ -147,7 +147,7 @@ class ItemControllerTest {
         @DisplayName("상품의 한 페이지를 보여줍니다. - 가격 높은 순")
         void getItemsByHighPrice() throws Exception {
             // given
-            List<ItemBasicField> itemBasicFieldList = IntStream.rangeClosed(1, 30)
+            List<ItemBasicField> itemBasicFieldList = IntStream.range(1, 31)
                     .mapToObj(i -> ItemBasicField.builder()
                             .itemName("상품명 " + i)
                             .itemPrice(10000 + i)
@@ -155,7 +155,7 @@ class ItemControllerTest {
                             .build())
                     .collect(toList());
 
-            List<Shoes> shoesList = IntStream.rangeClosed(1, 30)
+            List<Shoes> shoesList = IntStream.range(1, 31)
                     .mapToObj(i -> Shoes.builder()
                             .itemBasicField(itemBasicFieldList.get(i - 1))
                             .shoesSize(220 + i)

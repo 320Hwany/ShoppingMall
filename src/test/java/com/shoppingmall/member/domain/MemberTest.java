@@ -1,9 +1,8 @@
 package com.shoppingmall.member.domain;
 
+import com.shoppingmall.utils.AccessTokenHolder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -18,13 +17,23 @@ class MemberTest {
                 .email("yhwjd99@gmail.com")
                 .password("1234")
                 .age(25)
-                .sessionList(new ArrayList<>())
                 .build();
 
-        Session session = member.addSession();
+        Session session = Session.builder()
+                .member(member)
+                .accessTokenHolder(new TestAccessTokenHolder())
+                .build();
         // expected
         assertThat(session.getMember()).isEqualTo(member);
-        assertThat(member.getSessionList().size()).isEqualTo(1);
-        assertThat(member.getSessionList().get(0)).isEqualTo(session);
+    }
+
+    private class TestAccessTokenHolder implements AccessTokenHolder {
+
+        private static final String MESSAGE = "testToken";
+
+        @Override
+        public String getAccessToken() {
+            return MESSAGE;
+        }
     }
 }

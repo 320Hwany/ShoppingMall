@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -44,7 +42,6 @@ class MemberServiceTest {
                     .age(25)
                     .build();
 
-
             // when
             MemberResponse memberResponse = memberService.signup(memberSignup);
 
@@ -58,7 +55,7 @@ class MemberServiceTest {
     }
 
     @Nested
-    @DisplayName("회원 로그인 테스트 - Service")
+    @DisplayName("회원정보 일치하는 회원 가져오기 - Service")
     @Transactional
     class Login {
         private Member member = Member.builder()
@@ -66,7 +63,6 @@ class MemberServiceTest {
                 .email("yhwjd99@gmail.com")
                 .password("1234")
                 .age(25)
-                .sessionList(new ArrayList<>())
                 .build();
 
         @BeforeEach
@@ -75,7 +71,7 @@ class MemberServiceTest {
         }
 
         @Test
-        @DisplayName("회원 로그인 테스트 - 성공")
+        @DisplayName("회원정보 일치하는 회원정보 가져오기 - 성공")
         void login() {
             // given
             MemberLogin memberLogin = MemberLogin.builder()
@@ -86,16 +82,15 @@ class MemberServiceTest {
             memberRepository.save(member);
 
             // when
-            String accessToken = memberService.login(memberLogin);
+            Member getMember = memberService.getMember(memberLogin);
 
             // then
-            assertThat(member.getSessionList().size()).isEqualTo(1);
-            assertThat(member.getSessionList().get(0).getAccessToken()).isEqualTo(accessToken);
+            assertThat(member).isEqualTo(getMember);
         }
 
         @Test
-        @DisplayName("회원 정보가 일치하지 않으면 로그인을 할 수 없습니다. - 실패")
-        void loginFail() {
+        @DisplayName("회원 정보가 일치하지 않으면 회원정보를 가져올 수 없습니다. - 실패")
+        void getMemberFail() {
             // given
             MemberLogin memberLogin = MemberLogin.builder()
                     .email("yhwjd99@gmail.com")
@@ -106,7 +101,7 @@ class MemberServiceTest {
 
             // expected
             assertThrows(UnauthorizedException.class,
-                    () -> memberService.login(memberLogin));
+                    () -> memberService.getMember(memberLogin));
         }
     }
 }

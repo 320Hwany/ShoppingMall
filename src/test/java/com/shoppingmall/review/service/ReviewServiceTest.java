@@ -46,7 +46,7 @@ class ReviewServiceTest {
                     .build();
 
             // when
-            ReviewResponse reviewResponse = reviewService.reviewSave(reviewSave);
+            ReviewResponse reviewResponse = reviewService.saveReview(reviewSave);
 
             // then
             assertThat(reviewRepository.count()).isEqualTo(1);
@@ -97,7 +97,7 @@ class ReviewServiceTest {
         @DisplayName("리뷰 한 페이지 조회 - 최신순")
         void readReviewsByLatest() {
             // given
-            List<Review> reviews = IntStream.rangeClosed(1, 30)
+            List<Review> reviews = IntStream.range(1, 31)
                     .mapToObj(i -> Review.builder()
                             .title("제목입니다. " + i)
                             .content("내용입니다. " + i)
@@ -124,7 +124,7 @@ class ReviewServiceTest {
         @DisplayName("리뷰 한 페이지 조회 - 평점 낮은순")
         void readReviewsByLowRating() {
             // given
-            List<Review> reviews = IntStream.rangeClosed(1, 5)
+            List<Review> reviews = IntStream.range(1, 6)
                     .mapToObj(i -> Review.builder()
                             .title("제목입니다. " + i)
                             .content("내용입니다. " + i)
@@ -152,7 +152,7 @@ class ReviewServiceTest {
         @DisplayName("리뷰 한 페이지 조회 - 평점 높응ㄴ순")
         void readReviewsByHighRating() {
             // given
-            List<Review> reviews = IntStream.rangeClosed(1, 5)
+            List<Review> reviews = IntStream.range(1, 6)
                     .mapToObj(i -> Review.builder()
                             .title("제목입니다. " + i)
                             .content("내용입니다. " + i)

@@ -19,8 +19,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/review-save")
-    public ResponseEntity<ReviewResponse> reviewSave(@RequestBody @Valid ReviewSave reviewSave) {
-        ReviewResponse reviewResponse = reviewService.reviewSave(reviewSave);
+    public ResponseEntity<ReviewResponse> saveReview(@RequestBody @Valid ReviewSave reviewSave) {
+        ReviewResponse reviewResponse = reviewService.saveReview(reviewSave);
         return ResponseEntity.ok(reviewResponse);
     }
 
