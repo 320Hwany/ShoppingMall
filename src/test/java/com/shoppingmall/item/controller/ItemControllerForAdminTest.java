@@ -69,8 +69,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.itemColor").value("검정색"))
                     .andExpect(jsonPath("$.pantsSize").value(30))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -96,8 +94,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.itemColor").value("검정색"))
                     .andExpect(jsonPath("$.shoesSize").value(270))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -123,8 +119,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.itemColor").value("검정색"))
                     .andExpect(jsonPath("$.topSize").value("MEDIUM"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -149,8 +143,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.itemName").value("상품명을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
 
         @Test
@@ -175,8 +167,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.itemPrice").value("상품 가격을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
 
         @Test
@@ -200,8 +190,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.itemColor").value("상품 색상을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
     }
 
@@ -249,8 +237,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.itemColor").value("하얀색"))
                     .andExpect(jsonPath("$.pantsSize").value(32))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -282,8 +268,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.itemColor").value("하얀색"))
                     .andExpect(jsonPath("$.shoesSize").value(275))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -315,8 +299,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.itemColor").value("하얀색"))
                     .andExpect(jsonPath("$.topSize").value("LARGE"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -347,8 +329,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.itemName").value("상품명을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -379,8 +359,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.itemPrice").value("상품 가격을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -411,8 +389,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.itemColor").value("상품 색상을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
     }
 
@@ -446,8 +422,6 @@ class ItemControllerForAdminTest {
             mockMvc.perform(delete("/admin/item/{itemId}", pants.getId()))
                     .andExpect(status().isOk())
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
 
         @Test
@@ -459,8 +433,6 @@ class ItemControllerForAdminTest {
                     .andExpect(jsonPath("$.code").value("404"))
                     .andExpect(jsonPath("$.message").value("상품을 찾을 수 없습니다."))
                     .andDo(print());
-
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
     }
 }

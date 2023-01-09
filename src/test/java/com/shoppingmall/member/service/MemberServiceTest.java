@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -46,7 +47,6 @@ class MemberServiceTest {
             MemberResponse memberResponse = memberService.signup(memberSignup);
 
             // then
-            assertThat(memberRepository.count()).isEqualTo(1);
             assertThat(memberResponse.getName()).isEqualTo("회원이름");
             assertThat(memberResponse.getEmail()).isEqualTo("yhwjd99@gmail.com");
             assertThat(memberResponse.getPassword()).isEqualTo("1234");

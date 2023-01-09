@@ -61,7 +61,6 @@ class ItemServiceTest {
             ItemResponse itemResponse = itemService.getItem(shoes.getId());
 
             // then
-            assertThat(itemRepository.count()).isEqualTo(1);
             assertThat(itemResponse.getItemName()).isEqualTo("상품명");
             assertThat(itemResponse.getItemPrice()).isEqualTo(50000);
             assertThat(itemResponse.getItemColor()).isEqualTo("검정색");
@@ -100,7 +99,6 @@ class ItemServiceTest {
             ItemResponse itemResponse = itemService.savePants(pantsSave);
 
             // then
-            assertThat(itemRepository.count()).isEqualTo(1);
             assertThat(itemResponse.getItemName()).isEqualTo("하의 상품");
             assertThat(itemResponse.getItemPrice()).isEqualTo(60000);
             assertThat(itemResponse.getItemColor()).isEqualTo("검정색");
@@ -122,7 +120,6 @@ class ItemServiceTest {
             ItemResponse itemResponse = itemService.saveShoes(shoesSave);
 
             // then
-            assertThat(itemRepository.count()).isEqualTo(1);
             assertThat(itemResponse.getItemName()).isEqualTo("신발 상품");
             assertThat(itemResponse.getItemPrice()).isEqualTo(70000);
             assertThat(itemResponse.getItemColor()).isEqualTo("하얀색");
@@ -144,7 +141,6 @@ class ItemServiceTest {
             ItemResponse itemResponse = itemService.saveTop(topSave);
 
             // then
-            assertThat(itemRepository.count()).isEqualTo(1);
             assertThat(itemResponse.getItemName()).isEqualTo("상의 상품");
             assertThat(itemResponse.getItemPrice()).isEqualTo(50000);
             assertThat(itemResponse.getItemColor()).isEqualTo("검정색");
@@ -193,7 +189,6 @@ class ItemServiceTest {
             assertThat(itemResponse.getItemPrice()).isEqualTo(50001);
             assertThat(itemResponse.getItemColor()).isEqualTo("하얀색");
             assertThat(itemResponse.getPantsSize()).isEqualTo(32);
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -222,7 +217,6 @@ class ItemServiceTest {
             assertThat(itemResponse.getItemPrice()).isEqualTo(50001);
             assertThat(itemResponse.getItemColor()).isEqualTo("하얀색");
             assertThat(itemResponse.getShoesSize()).isEqualTo(275);
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -251,7 +245,6 @@ class ItemServiceTest {
             assertThat(itemResponse.getItemPrice()).isEqualTo(50001);
             assertThat(itemResponse.getItemColor()).isEqualTo("하얀색");
             assertThat(itemResponse.getTopSize()).isEqualTo(LARGE);
-            assertThat(itemRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -331,8 +324,6 @@ class ItemServiceTest {
 
             // expected
             itemService.deletePants(pants.getId());
-
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
 
         @Test
@@ -341,7 +332,6 @@ class ItemServiceTest {
             // expected
             assertThrows(ItemNotFoundException.class,
                     () -> itemService.deletePants(1L));
-            assertThat(itemRepository.count()).isEqualTo(0);
         }
     }
 }

@@ -30,8 +30,7 @@ public class ReviewService {
     }
 
     public ReviewResponse getReviewResponse(Long id) {
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(ReviewNotFoundException::new);
+        Review review = reviewRepository.getById(id);
         return new ReviewResponse(review);
     }
 
@@ -55,16 +54,14 @@ public class ReviewService {
 
     @Transactional
     public ReviewResponse updateReview(Long id, ReviewUpdate reviewUpdate) {
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(ReviewNotFoundException::new);
+        Review review = reviewRepository.getById(id);
         review.update(reviewUpdate);
         return new ReviewResponse(review);
     }
 
     @Transactional
     public void deleteReview(Long id) {
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(ReviewNotFoundException::new);
+        Review review = reviewRepository.getById(id);
         reviewRepository.delete(review);
     }
 }

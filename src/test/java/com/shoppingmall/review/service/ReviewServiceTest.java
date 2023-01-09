@@ -23,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ReviewServiceTest {
 
     @Autowired
-    private ReviewService reviewService;
+    private ReviewRepository reviewRepository;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
     @Nested
     @DisplayName("리뷰 저장 테스트 - Service")
@@ -149,7 +149,7 @@ class ReviewServiceTest {
         }
 
         @Test
-        @DisplayName("리뷰 한 페이지 조회 - 평점 높응ㄴ순")
+        @DisplayName("리뷰 한 페이지 조회 - 평점 높은순")
         void readReviewsByHighRating() {
             // given
             List<Review> reviews = IntStream.range(1, 6)

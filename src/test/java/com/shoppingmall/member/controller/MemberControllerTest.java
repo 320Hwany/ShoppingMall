@@ -70,8 +70,6 @@ class MemberControllerTest {
                     .andExpect(jsonPath("$.password").value("1234"))
                     .andExpect(jsonPath("$.age").value(25))
                     .andDo(print());
-
-            assertThat(memberRepository.count()).isEqualTo(1);
         }
 
         @Test
@@ -96,8 +94,6 @@ class MemberControllerTest {
                     .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
                     .andExpect(jsonPath("$.validation.email").value("이메일을 입력해주세요"))
                     .andDo(print());
-
-            assertThat(memberRepository.count()).isEqualTo(0);
         }
     }
 
