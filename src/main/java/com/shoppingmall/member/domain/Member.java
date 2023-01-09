@@ -1,11 +1,15 @@
 package com.shoppingmall.member.domain;
 
 import com.shoppingmall.member.dto.request.MemberSignup;
+import com.shoppingmall.member.dto.request.MemberUpdate;
+import com.shoppingmall.member.dto.response.MemberResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -38,5 +42,29 @@ public class Member {
         this.email = memberSignup.getEmail();
         this.password = memberSignup.getPassword();
         this.age = memberSignup.getAge();
+    }
+
+    public void update(MemberUpdate memberUpdate) {
+        this.name = memberUpdate.getName();
+        this.email = memberUpdate.getEmail();
+        this.password = memberUpdate.getPassword();
+        this.age = memberUpdate.getAge();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return Objects.equals(id, member.id) &&
+                Objects.equals(name, member.name)
+                && Objects.equals(email, member.email)
+                && Objects.equals(password, member.password)
+                && Objects.equals(age, member.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, password, age);
     }
 }

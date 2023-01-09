@@ -1,5 +1,6 @@
 package com.shoppingmall.global.error;
 
+import com.shoppingmall.member.exception.MemberNotFoundException;
 import com.shoppingmall.member.exception.UnauthorizedException;
 import com.shoppingmall.item.exception.ItemNotFoundException;
 import com.shoppingmall.global.exception.NotFoundException;
@@ -62,5 +63,16 @@ public class ExceptionController {
                 .build();
 
         return ResponseEntity.status(UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(MemberNotFoundException.class)
+    public ResponseEntity<ErrorResponse> MemberNotFound(MemberNotFoundException e) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(e.getStatusCode())
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(NOT_FOUND).body(errorResponse);
     }
 }

@@ -5,7 +5,6 @@ import com.shoppingmall.item.domain.item.Item;
 import com.shoppingmall.item.domain.item.Shoes;
 import com.shoppingmall.item.dto.request.ItemSearch;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

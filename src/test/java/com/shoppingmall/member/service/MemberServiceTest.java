@@ -3,17 +3,15 @@ package com.shoppingmall.member.service;
 import com.shoppingmall.member.domain.Member;
 import com.shoppingmall.member.dto.request.MemberLogin;
 import com.shoppingmall.member.dto.request.MemberSignup;
-import com.shoppingmall.member.dto.response.MemberResponse;
-import com.shoppingmall.member.exception.UnauthorizedException;
+import com.shoppingmall.member.dto.request.MemberUpdate;
 import com.shoppingmall.member.repository.MemberRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class MemberServiceTest {
@@ -23,6 +21,11 @@ class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
+
+    @BeforeEach
+    void clean() {
+        memberRepository.deleteAll();
+    }
 
     @Nested
     @DisplayName("회원 가입 테스트 - Service")
@@ -44,64 +47,88 @@ class MemberServiceTest {
                     .build();
 
             // when
-            MemberResponse memberResponse = memberService.signup(memberSignup);
-
+            memberService.signup(memberSignup);
             // then
-            assertThat(memberResponse.getName()).isEqualTo("회원이름");
-            assertThat(memberResponse.getEmail()).isEqualTo("yhwjd99@gmail.com");
-            assertThat(memberResponse.getPassword()).isEqualTo("1234");
-            assertThat(memberResponse.getAge()).isEqualTo(25);
+            assertThat(memberRepository.getByEmailAndPassword("yhwjd99@gmail.com", "1234"))
+                    .isNotNull();
         }
     }
 
-    @Nested
-    @DisplayName("회원정보 일치하는 회원 가져오기 - Service")
-    @Transactional
-    class Login {
-        private Member member = Member.builder()
+    @Test
+    @DisplayName("회원정보 일치하는 회원정보 가져오기 - 성공")
+    void getMember() {
+        // given
+        Member member = Member.builder()
                 .name("회원 이름")
                 .email("yhwjd99@gmail.com")
                 .password("1234")
                 .age(25)
                 .build();
 
-        @BeforeEach
-        void clean() {
-            memberRepository.deleteAll();
-        }
+        MemberLogin memberLogin = MemberLogin.builder()
+                .email("yhwjd99@gmail.com")
+                .password("1234")
+                .build();
 
-        @Test
-        @DisplayName("회원정보 일치하는 회원정보 가져오기 - 성공")
-        void login() {
-            // given
-            MemberLogin memberLogin = MemberLogin.builder()
-                    .email("yhwjd99@gmail.com")
-                    .password("1234")
-                    .build();
+        memberRepository.save(member);
 
-            memberRepository.save(member);
+        // when
+        Member getMember = memberService.getMember(memberLogin);
 
-            // when
-            Member getMember = memberService.getMember(memberLogin);
+        // then
+        assertThat(member).isEqualTo(getMember);
+    }
 
-            // then
-            assertThat(member).isEqualTo(getMember);
-        }
+    @Test
+    @DisplayName("회원 정보가 일치하는 회원 정보 수정하기 - 성공")
+    void updateMember() {
+        //given
+        Member member = Member.builder()
+                .name("회원 이름")
+                .email("yhwjd99@gmail.com")
+                .password("1234")
+                .age(25)
+                .build();
 
-        @Test
-        @DisplayName("회원 정보가 일치하지 않으면 회원정보를 가져올 수 없습니다. - 실패")
-        void getMemberFail() {
-            // given
-            MemberLogin memberLogin = MemberLogin.builder()
-                    .email("yhwjd99@gmail.com")
-                    .password("1234567890")
-                    .build();
+        MemberUpdate memberUpdate = MemberUpdate.builder()
+                .name("수정 회원 이름")
+                .email("yhwjd99@naver.com")
+                .password("4321")
+                .age(20)
+                .build();
 
-            memberRepository.save(member);
+        memberRepository.save(member);
 
-            // expected
-            assertThrows(UnauthorizedException.class,
-                    () -> memberService.getMember(memberLogin));
-        }
+        // when
+        memberService.updateMember(member.getId(), memberUpdate);
+
+        // then
+        Member getMember = memberRepository
+                .getByEmailAndPassword(memberUpdate.getEmail(), memberUpdate.getPassword());
+        assertThat(getMember.getName()).isEqualTo(memberUpdate.getName());
+        assertThat(getMember.getEmail()).isEqualTo(memberUpdate.getEmail());
+        assertThat(getMember.getPassword()).isEqualTo(memberUpdate.getPassword());
+        assertThat(getMember.getAge()).isEqualTo(memberUpdate.getAge());
+    }
+
+    @Test
+    @DisplayName("회원 삭제하기 - 성공")
+    void deleteMember() {
+        //given
+        Member member = Member.builder()
+                .name("회원 이름")
+                .email("yhwjd99@gmail.com")
+                .password("1234")
+                .age(25)
+                .build();
+
+        memberRepository.save(member);
+
+        // when
+        memberService.deleteMember(member.getId());
+
+        // then
+        assertThat(memberRepository.findByEmailAndPassword("yhwjd99@gmail.com", "1234"))
+                .isNotPresent();
     }
 }

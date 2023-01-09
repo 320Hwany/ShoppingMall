@@ -4,7 +4,6 @@ import com.shoppingmall.member.domain.Member;
 import com.shoppingmall.member.domain.Session;
 import com.shoppingmall.member.repository.SessionRepository;
 import com.shoppingmall.utils.AccessTokenHolder;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

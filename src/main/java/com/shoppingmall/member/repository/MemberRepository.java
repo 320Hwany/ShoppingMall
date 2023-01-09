@@ -9,9 +9,19 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository {
 
+    Optional<Member> findById(Long id);
+
+    Member getById(Long id);
+
     Optional<Member> findByEmailAndPassword(String email, String password);
+
+    Member getByEmailAndPassword(String email, String password);
 
     void save(Member member);
 
     void deleteAll();
+
+    void delete(Member member);
+
+    Long count();
 }
